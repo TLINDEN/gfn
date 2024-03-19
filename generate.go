@@ -14,12 +14,12 @@ func Generate(count int, code string) ([]string, error) {
 
 	gen, err := fn.Compile(code, fn.Collapse(true))
 	if err != nil {
-		return nil, fmt.Errorf("Could not compile FN code:", err)
+		return nil, fmt.Errorf("could not compile FN code: %w", err)
 	}
 
 	for i := 0; i < count; i++ {
 		name := gen.String()
-		if !exists(reg, name) {
+		if !Exists(reg, name) {
 			reg[name] = 1
 		}
 	}

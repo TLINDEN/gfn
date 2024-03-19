@@ -79,33 +79,35 @@ type Template struct {
 	Tmpl string
 }
 
-var Templates = []Template{
-	{Name: "MiddleEarth", Tmpl: MIDDLE_EARTH},
-	{Name: "JapaneseNamesConstrained", Tmpl: JAPANESE_NAMES_CONSTRAINED},
-	{Name: "JapaneseNamesDiverse", Tmpl: JAPANESE_NAMES_DIVERSE},
-	{Name: "ChineseNames", Tmpl: CHINESE_NAMES},
-	{Name: "GreekNames", Tmpl: GREEK_NAMES},
-	{Name: "HawaiianNames1", Tmpl: HAWAIIAN_NAMES_1},
-	{Name: "HawaiianNames2", Tmpl: HAWAIIAN_NAMES_2},
-	{Name: "OldLatinPlaceNames", Tmpl: OLD_LATIN_PLACE_NAMES},
-	{Name: "DragonsPern", Tmpl: DRAGONS_PERN},
-	{Name: "DragonRiders", Tmpl: DRAGON_RIDERS},
-	{Name: "Pokemon", Tmpl: POKEMON},
-	{Name: "FantasyR", Tmpl: FANTASY_VOWELS_R},
-	{Name: "FantasySA", Tmpl: FANTASY_S_A},
-	{Name: "FantasyHL", Tmpl: FANTASY_H_L},
-	{Name: "FantasyNL", Tmpl: FANTASY_N_L},
-	{Name: "FantasyKN", Tmpl: FANTASY_K_N},
-	{Name: "FantasyJGZ", Tmpl: FANTASY_J_G_Z},
-	{Name: "FantasyKJY", Tmpl: FANTASY_K_J_Y},
-	{Name: "FantasySE", Tmpl: FANTASY_S_E},
-	{Name: "Funny", Tmpl: "sdD"},
-	{Name: "Idiots", Tmpl: "ii"},
+var Templates = map[string]string{
+	"MiddleEarth":              MIDDLE_EARTH,
+	"JapaneseNamesConstrained": JAPANESE_NAMES_CONSTRAINED,
+	"JapaneseNamesDiverse":     JAPANESE_NAMES_DIVERSE,
+	"ChineseNames":             CHINESE_NAMES,
+	"GreekNames":               GREEK_NAMES,
+	"HawaiianNames1":           HAWAIIAN_NAMES_1,
+	"HawaiianNames2":           HAWAIIAN_NAMES_2,
+	"OldLatinPlaceNames":       OLD_LATIN_PLACE_NAMES,
+	"DragonsPern":              DRAGONS_PERN,
+	"DragonRiders":             DRAGON_RIDERS,
+	"Pokemon":                  POKEMON,
+	"FantasyR":                 FANTASY_VOWELS_R,
+	"FantasySA":                FANTASY_S_A,
+	"FantasyHL":                FANTASY_H_L,
+	"FantasyNL":                FANTASY_N_L,
+	"FantasyKN":                FANTASY_K_N,
+	"FantasyJGZ":               FANTASY_J_G_Z,
+	"FantasyKJY":               FANTASY_K_J_Y,
+	"FantasySE":                FANTASY_S_E,
+	"Funny":                    "sdD",
+	"Idiots":                   "ii",
 }
 
 const (
-	VERSION string = "0.0.1"
-	Usage   string = `This is gfn, a fantasy name generator cli.
+	VERSION      string = "0.0.1"
+	DefaultCount int    = 160 // number of words to generate if -c is omitted
+	Columns      int    = 8   // number of columns to print
+	Usage        string = `This is gfn, a fantasy name generator cli.
 
 Usage: gfn [-vlc] <name|code>
 
@@ -151,6 +153,7 @@ type Config struct {
 	Showversion   bool   `koanf:"version"` // -v
 	Listshortcuts bool   `koanf:"list"`    // -l
 	Code          string // arg
+	Count         int    `koanf:"count"` // -c
 }
 
 func InitConfig(output io.Writer) (*Config, error) {
@@ -158,7 +161,7 @@ func InitConfig(output io.Writer) (*Config, error) {
 
 	// Load default values using the confmap provider.
 	if err := kloader.Load(confmap.Provider(map[string]interface{}{
-		"count": 10,
+		"count": DefaultCount,
 	}, "."), nil); err != nil {
 		return nil, fmt.Errorf("failed to load default values into koanf: %w", err)
 	}
@@ -173,6 +176,7 @@ func InitConfig(output io.Writer) (*Config, error) {
 	// parse commandline flags
 	flagset.BoolP("list", "l", false, "show list of precompiled codes")
 	flagset.BoolP("version", "V", false, "show program version")
+	flagset.IntP("count", "c", 1, "how many names to generate")
 
 	if err := flagset.Parse(os.Args[1:]); err != nil {
 		return nil, fmt.Errorf("failed to parse program arguments: %w", err)

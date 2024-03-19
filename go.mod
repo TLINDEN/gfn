@@ -5,6 +5,7 @@ go 1.22
 require github.com/s0rg/fantasyname v1.3.4
 
 require (
+	github.com/alecthomas/repr v0.4.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.0.0-alpha.1 // indirect
 	github.com/knadh/koanf/maps v0.1.1 // indirect
