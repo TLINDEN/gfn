@@ -16,7 +16,6 @@ to use the information below, see the instructions first.
 | D         | consonant or consonant suited for a stupid person's name                |
 | d         | syllable suited for a stupid person's name (always begins with a vowel) |
 | '         | literal apostrophe                                                      |
-|-----------|-------------------------------------------------------------------------|
 | ( )       | denotes that anything inside is literal                                 |
 | < >       | denotes that anything inside is a special symbol                        |
-| `|`       | logical OR operator for use in ( ) and < > |
+| \|        | logical OR operator for use in ( ) and < > |
