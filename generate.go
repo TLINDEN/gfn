@@ -20,16 +20,12 @@ package main
 import (
 	"fmt"
 	"log/slog"
-	"math/rand"
-	"time"
 
 	fn "github.com/s0rg/fantasyname"
 )
 
 // Actual fantasy name generation
 func Generate(conf *Config) ([]string, error) {
-	rand.Seed(time.Now().UnixNano())
-
 	//  we register  each generated  word to  avoid duplicates,  which
 	// naturally happens every while
 	reg := map[string]int{}
@@ -73,7 +69,7 @@ func Generate(conf *Config) ([]string, error) {
 	names := make([]string, len(reg))
 
 	i := 0
-	for k, _ := range reg {
+	for k := range reg {
 		names[i] = k
 		i++
 	}
