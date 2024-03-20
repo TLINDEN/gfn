@@ -2,9 +2,9 @@
 
 ![Gfn Logo](https://github.com/TLINDEN/gfn/blob/main/.github/assets/logo.png)
 
-[![Actions](https://github.com/tlinden/gfnc/actions/workflows/ci.yaml/badge.svg)](https://github.com/tlinden/gfnc/actions)
-[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/tlinden/gfnc/blob/master/LICENSE)
-[![Go Report Card](https://goreportcard.com/badge/github.com/tlinden/gfnc)](https://goreportcard.com/report/github.com/tlinden/gfnc) 
+[![Actions](https://github.com/tlinden/gfn/actions/workflows/ci.yaml/badge.svg)](https://github.com/tlinden/gfn/actions)
+[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/tlinden/gfn/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tlinden/gfn)](https://goreportcard.com/report/github.com/tlinden/gfn) 
 
 Generate fantasy names for games and stories. It uses the fine
 [fantasyname module](https://github.com/s0rg/fantasyname) by
