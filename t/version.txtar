@@ -1,0 +1,2 @@
+exec testgfn -v
+stdout 'This is gfn version'

@@ -1,0 +1,2 @@
+exec testgfn -h
+stdout 'This is gfn'

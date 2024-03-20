@@ -1,4 +1,10 @@
-# gfn
+# gfn - generate fantasy names for games and stories on the commandline
+
+![Gfn Logo](https://github.com/TLINDEN/gfn/blob/main/.github/assets/logo.png)
+
+[![Actions](https://github.com/tlinden/gfnc/actions/workflows/ci.yaml/badge.svg)](https://github.com/tlinden/gfnc/actions)
+[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/tlinden/gfnc/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tlinden/gfnc)](https://goreportcard.com/report/github.com/tlinden/gfnc) 
 
 Generate fantasy names for games and stories. It uses the fine
 [fantasyname module](https://github.com/s0rg/fantasyname) by
@@ -12,14 +18,51 @@ guide](http://rinkworks.com/namegen/reference.shtml).
 In case the site vanishes some day, a copy of those documents is
 contained here in the repository.
 
-# Install
+## Installation
 
-Execute
+The tool does not have any dependencies.  Just download the binary for
+your platform from the releases page and you're good to go.
+
+### Installation using a pre-compiled binary
+
+Go to the [latest release page](https://github.com/TLINDEN/gfn/releases/latest)
+and look for your OS and platform. There are two options to install the binary:
+
+Directly     download     the     binary    for     your     platform,
+e.g. `gfn-linux-amd64-0.0.2`, rename it to `gfn` (or whatever
+you like more!)  and put it into  your bin dir (e.g. `$HOME/bin` or as
+root to `/usr/local/bin`).
+
+Be sure  to verify  the signature  of the binary  file. For  this also
+download the matching `gfn-linux-amd64-0.0.2.sha256` file and:
 
 ```shell
-% go build
-% cp gfn $HOME/bin
+cat gfn-linux-amd64-0.0.2.sha25 && sha256sum gfn-linux-amd64-0.0.2
 ```
+You should see the same SHA256 hash.
+
+You  may  also download  a  binary  tarball  for your  platform,  e.g.
+`gfn-linux-amd64-0.0.2.tar.gz`,  unpack and  install it.  GNU Make  is
+required for this:
+   
+```shell
+tar xvfz gfn-linux-amd64-0.0.2.tar.gz
+cd gfn-linux-amd64-0.0.2
+sudo make install
+```
+
+### Installation from source
+
+You will need the Golang toolchain  in order to build from source. GNU
+Make will also help but is not strictly neccessary.
+
+If you want to compile the tool yourself, use `git clone` to clone the
+repository.   Then   execute   `go    mod   tidy`   to   install   all
+dependencies. Then  just enter `go  build` or -  if you have  GNU Make
+installed - `make`.
+
+To install after building either copy the binary or execute `sudo make
+install`. 
 
 # Usage
 
@@ -34,19 +77,21 @@ To use one of them and limit the number of
 words generated:
 
 ```shell
-% gfn JapaneseNamesDiverse -c 24
-yumufuchi  afuchin    keyu       amorekin   ekimuwo    ashihewani rosa       chireki
-oterun     ruwahi     uwamine    emiyumu    temimon    yuwa       awayason   fuki
-emiwa      nushiron   achihora   yomichi    saniyutan  kewaritsu  saroru     uhashi 
+% gfn JapaneseNamesDiverse -n 24
+iyonen     isuyaro    iwamo      remi       kikune     chikeyu    iwamun
+ruri       orasenin   wamo       oramamo    ironisuru  hokoku     kumun
+ewoyani    imanoma    enenoya    sawo       enunumiken wayumu     itamachi
 ```
 
 You can also write a code yourself:
 
 ```shell
-gfn '!sVm' -c 24
-Quaoobunker    Emeemoopsie    Angeepookie    Osousmoosh     Umuisweetie    Ustoesnookum   Sulealover     Imopookie
-Skelaesnoogle  Echiapookie    Cereepoochie   Gariwuddle     Echaewookie    Tiaieschmoopie Queaubooble    Athesmoosh 
-Undousnuggy    Urnuigooble    Mosoesnuggy    Eldoegooble    Denoipoochie   Mosoosmooch    Shyucuddly     Tiaeylovey
+gfn '!sVm' -n 25
+Angeeschnookum Arysmooch      Oraepookie     Rothaudoodle   Hinaypoochie
+Keloosnookum   Esteeschnookum Ageausmoosh    Erucuddle      Tonuilover
+Ghaeaschnoogle Seraylover     Dynysnoogle    Chaibunker     Poloebaby
+Leroepoochie   Tinowuggy      Baniaschmoopie Banoesnoogy    Taseamoopie
+Entheysmooch   Ustamooglie    Taneidoodle    Hatiesnoogy    Belacuddle 
 ```
 
 A short outline of the code will be printed if you add the `-h`
@@ -54,11 +99,13 @@ parameter:
 ```shell
 This is gfn, a fantasy name generator cli.
 
-Usage: gfn [-vlc] <name|code>
+Usage: gfn [-vld] [-c <config file>] [-n <number of names>] <name|code>
 
 Options:
--c --count    How many names to generate
+-c --config   Config file to use (optional)
+-n --number   Number of names to generate
 -l --list     List pre-compiled shortcuts
+-d --debug    Show debugging output
 -v --version  Show program version
 
 pattern  syntax The  letters s,  v, V,  c, B,  C, i,  m, M,  D, and  d
@@ -93,6 +140,28 @@ An exclamation point ! means  to capitalize the component that follows
 it. For  example, !(foo) will emit  Foo and v!s will  emit a lowercase
 vowel followed by a capitalized syllable, like eRod.
 ```
+
+You can use a config file to store your own codes, once you found one
+you like. A configfile is searched in these locations in this order:
+
+* `/etc/gfn.conf`
+* `/usr/local/etc/gfn.conf`
+* `$HOME/.config/gfn/config`
+* `$HOME/.gfn`
+
+You may also specify a config file on the commandline using the `-c`
+flag.
+
+You can add multiple codes, here's an example:
+
+```toml
+# example config file
+[[Templates]]
+morph = "!s(na|ha|ma|va)v"
+morphium = "!s(na|ha|ma|va)v(ius|ium|aum|oum|eum)"
+```
+
+Config files are expected to be in the [TOML format](https://toml.io/en/).
 
 # Report bugs
 

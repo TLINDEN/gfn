@@ -1,0 +1,2 @@
+exec testgfn Idiots
+stdout 'face'

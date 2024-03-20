@@ -1,11 +1,31 @@
+/*
+Copyright © 2024 Thomas von Dein
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package main
 
 import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
+	"github.com/knadh/koanf/parsers/toml"
 	"github.com/knadh/koanf/providers/confmap"
+	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/providers/posflag"
 	"github.com/knadh/koanf/v2"
 	flag "github.com/spf13/pflag"
@@ -104,16 +124,19 @@ var Templates = map[string]string{
 }
 
 const (
-	VERSION      string = "0.0.1"
-	DefaultCount int    = 160 // number of words to generate if -c is omitted
-	Columns      int    = 8   // number of columns to print
-	Usage        string = `This is gfn, a fantasy name generator cli.
+	VERSION        string = "0.0.2"
+	DefaultCount   int    = 160 // number of words to generate if -c is omitted
+	DefaultColumns int    = 10  // number of columns to print
+	MaxWidth       int    = 72  // max width of output, adjusts columns
+	Usage          string = `This is gfn, a fantasy name generator cli.
 
-Usage: gfn [-vlc] <name|code>
+Usage: gfn [-vld] [-c <config file>] [-n <number of names>] <name|code>
 
 Options:
--c --count    How many names to generate
+-c --config   Config file to use (optional)
+-n --number   Number of names to generate
 -l --list     List pre-compiled shortcuts
+-d --debug    Show debugging output
 -v --version  Show program version
 
 pattern  syntax The  letters s,  v, V,  c, B,  C, i,  m, M,  D, and  d
@@ -150,10 +173,15 @@ vowel followed by a capitalized syllable, like eRod.`
 )
 
 type Config struct {
-	Showversion   bool   `koanf:"version"` // -v
-	Listshortcuts bool   `koanf:"list"`    // -l
-	Code          string // arg
-	Count         int    `koanf:"count"` // -c
+	Showversion   bool              `koanf:"version"` // -v
+	Debug         bool              `koanf:"debug"`   // -d
+	Listshortcuts bool              `koanf:"list"`    // -l
+	Number        int               `koanf:"number"`  // -c
+	Templates     map[string]string `koanf:"templates"`
+	Config        string            `koanf:"config"`
+	Columns       int               `koanf:"columns"` // number of columns to use
+	Code          string            // arg
+	WordWidth     int               // max width of generated words
 }
 
 func InitConfig(output io.Writer) (*Config, error) {
@@ -161,7 +189,8 @@ func InitConfig(output io.Writer) (*Config, error) {
 
 	// Load default values using the confmap provider.
 	if err := kloader.Load(confmap.Provider(map[string]interface{}{
-		"count": DefaultCount,
+		"number":  DefaultCount,
+		"columns": DefaultColumns,
 	}, "."), nil); err != nil {
 		return nil, fmt.Errorf("failed to load default values into koanf: %w", err)
 	}
@@ -175,11 +204,42 @@ func InitConfig(output io.Writer) (*Config, error) {
 
 	// parse commandline flags
 	flagset.BoolP("list", "l", false, "show list of precompiled codes")
-	flagset.BoolP("version", "V", false, "show program version")
-	flagset.IntP("count", "c", 1, "how many names to generate")
+	flagset.BoolP("version", "v", false, "show program version")
+	flagset.BoolP("debug", "d", false, "enable debug output")
+	flagset.IntP("number", "n", 1, "number of names to generate")
+	flagset.StringP("config", "c", "", "config file")
 
 	if err := flagset.Parse(os.Args[1:]); err != nil {
 		return nil, fmt.Errorf("failed to parse program arguments: %w", err)
+	}
+
+	// generate a  list of config files to try  to load, including the
+	// one provided via -c, if any
+	var configfiles []string
+
+	configfile, _ := flagset.GetString("config")
+	home, _ := os.UserHomeDir()
+
+	if configfile != "" {
+		configfiles = []string{configfile}
+	} else {
+		configfiles = []string{
+			"/etc/gfn.conf", "/usr/local/etc/gfn.conf", // unix variants
+			filepath.Join(home, ".config", "gfn", "config"),
+			filepath.Join(home, ".gfn"),
+			"gfn.conf",
+		}
+	}
+
+	// Load the config file[s]
+	for _, cfgfile := range configfiles {
+		if path, err := os.Stat(cfgfile); !os.IsNotExist(err) {
+			if !path.IsDir() {
+				if err := kloader.Load(file.Provider(cfgfile), toml.Parser()); err != nil {
+					return nil, fmt.Errorf("error loading config file: %w", err)
+				}
+			}
+		} // else: we ignore the file if it doesn't exists
 	}
 
 	// command line setup
@@ -196,6 +256,15 @@ func InitConfig(output io.Writer) (*Config, error) {
 	// arg is the code
 	if len(flagset.Args()) > 0 {
 		conf.Code = flagset.Args()[0]
+	}
+
+	// merge configured and hardcoded templates
+	if conf.Templates == nil {
+		conf.Templates = Templates
+	} else {
+		for name, code := range Templates {
+			conf.Templates[name] = code
+		}
 	}
 
 	return conf, nil

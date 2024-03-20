@@ -1,0 +1,2 @@
+exec testgfn -l
+stdout 'JapaneseNamesDiverse'

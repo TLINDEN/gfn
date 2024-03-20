@@ -1,15 +1,36 @@
+/*
+Copyright © 2024 Thomas von Dein
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package main
 
 import (
 	"fmt"
 	"io"
+	"log/slog"
 	"sort"
 )
 
-func ListTemplates(output io.Writer) {
+// Output a list of hardcoded FN code templates
+func ListTemplates(conf *Config, output io.Writer) {
+	slog.Debug("Listing configured templates", "templates", conf.Templates)
+
 	names := []string{}
 
-	for name := range Templates {
+	for name := range conf.Templates {
 		names = append(names, name)
 	}
 
@@ -20,11 +41,12 @@ func ListTemplates(output io.Writer) {
 	}
 }
 
-func PrintColumns(names []string, output io.Writer) error {
+// Columnar output
+func PrintColumns(conf *Config, names []string, output io.Writer) error {
 	count := len(names)
 
 	// no need for the hassle to calculate columns
-	if count <= Columns {
+	if count <= conf.Columns {
 		for _, name := range names {
 			fmt.Fprintln(output, name)
 		}
@@ -33,7 +55,7 @@ func PrintColumns(names []string, output io.Writer) error {
 	}
 
 	// get a transposed list of columns
-	padlist, max := Getcolumns(names, Columns)
+	padlist, max := Getcolumns(names, conf.Columns)
 
 	// make sure there's enough spacing between the columns
 	format := fmt.Sprintf("%%-%ds", max+1)
