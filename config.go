@@ -124,7 +124,7 @@ var Templates = map[string]string{
 }
 
 const (
-	VERSION        string = "0.0.2"
+	VERSION        string = "0.0.3"
 	DefaultCount   int    = 160 // number of words to generate if -c is omitted
 	DefaultColumns int    = 10  // number of columns to print
 	MaxWidth       int    = 72  // max width of output, adjusts columns

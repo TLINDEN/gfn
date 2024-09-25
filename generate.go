@@ -55,8 +55,6 @@ func Generate(conf *Config) ([]string, error) {
 		}
 	}
 
-	fmt.Println("fetched names")
-
 	slog.Debug("Generated fantasy names from code",
 		"code", conf.Code, "count-names", len(reg))
 
