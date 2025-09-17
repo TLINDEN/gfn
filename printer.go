@@ -40,7 +40,7 @@ func ListTemplates(conf *Config, output io.Writer) {
 	for _, name := range names {
 		_, err := fmt.Fprintln(output, name)
 		if err != nil {
-			log.Fatalf("failed to print to output: %w", err)
+			log.Fatalf("failed to print to output: %s", err)
 		}
 	}
 }
@@ -52,7 +52,11 @@ func PrintColumns(conf *Config, names []string, output io.Writer) error {
 	// no need for the hassle to calculate columns
 	if count <= conf.Columns {
 		for _, name := range names {
-			fmt.Fprintln(output, name)
+			_, err := fmt.Fprintln(output, name)
+			if err != nil {
+				log.Fatalf("failed to print to output: %s", err)
+			}
+
 		}
 
 		return nil
@@ -68,7 +72,7 @@ func PrintColumns(conf *Config, names []string, output io.Writer) error {
 		for _, word := range row {
 			_, err := fmt.Fprintf(output, format, word)
 			if err != nil {
-				log.Fatalf("failed to print to output: %w", err)
+				log.Fatalf("failed to print to output: %s", err)
 			}
 		}
 		fmt.Fprintln(output)

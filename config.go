@@ -201,7 +201,7 @@ func InitConfig(output io.Writer) (*Config, error) {
 	flagset.Usage = func() {
 		_, err := fmt.Fprintln(output, Usage)
 		if err != nil {
-			log.Fatalf("failed to print to output: %w", err)
+			log.Fatalf("failed to print to output: %s", err)
 		}
 		os.Exit(0)
 	}
