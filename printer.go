@@ -75,7 +75,11 @@ func PrintColumns(conf *Config, names []string, output io.Writer) error {
 				log.Fatalf("failed to print to output: %s", err)
 			}
 		}
-		fmt.Fprintln(output)
+		_, err := fmt.Fprintln(output)
+		if err != nil {
+			log.Fatalf("failed to print to output: %s", err)
+		}
+
 	}
 
 	return nil
