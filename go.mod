@@ -10,7 +10,7 @@ require (
 	github.com/knadh/koanf/providers/file v1.2.0
 	github.com/knadh/koanf/providers/posflag v1.0.1
 	github.com/knadh/koanf/v2 v2.3.0
-	github.com/rogpeppe/go-internal v1.13.1
+	github.com/rogpeppe/go-internal v1.14.1
 	github.com/s0rg/fantasyname v1.3.6
 	github.com/spf13/pflag v1.0.6
 	github.com/tlinden/yadu v0.1.3
@@ -28,6 +28,6 @@ require (
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
-	golang.org/x/tools v0.22.0 // indirect
+	golang.org/x/tools v0.26.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
