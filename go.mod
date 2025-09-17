@@ -1,8 +1,6 @@
 module github.com/TLINDEN/gfn
 
-go 1.23.0
-
-toolchain go1.23.5
+go 1.24
 
 require (
 	github.com/knadh/koanf/parsers/toml v0.1.0
@@ -11,7 +9,7 @@ require (
 	github.com/knadh/koanf/providers/posflag v1.0.1
 	github.com/knadh/koanf/v2 v2.3.0
 	github.com/rogpeppe/go-internal v1.13.1
-	github.com/s0rg/fantasyname v1.3.6
+	github.com/s0rg/fantasyname v1.3.7
 	github.com/spf13/pflag v1.0.6
 	github.com/tlinden/yadu v0.1.3
 )
@@ -27,7 +25,7 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	golang.org/x/sys v0.32.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
 	golang.org/x/tools v0.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
