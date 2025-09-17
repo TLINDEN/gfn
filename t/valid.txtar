@@ -1,2 +1,2 @@
-exec testgfn sVdmi(usus|hehe)
+exec gfn sVdmi(usus|hehe)
 stdout 'usus'

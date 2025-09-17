@@ -18,7 +18,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package main
 
 import (
-	"os"
 	"testing"
 
 	"github.com/rogpeppe/go-internal/testscript"
@@ -27,12 +26,12 @@ import (
 // see https://bitfieldconsulting.com/golang/test-scripts
 
 func TestMain(m *testing.M) {
-	os.Exit(testscript.RunMain(m, map[string]func() int{
-		"testgfn": TMain,
-	}))
+	testscript.Main(m, map[string]func(){
+		"gfn": main,
+	})
 }
 
-func TestFfn(t *testing.T) {
+func TestGfn(t *testing.T) {
 	testscript.Run(t, testscript.Params{
 		Dir: "t",
 	})

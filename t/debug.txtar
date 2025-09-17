@@ -1,2 +1,2 @@
-exec testgfn -d Vs
+exec gfn -d Vs
 stdout 'gfn/generate.go:'

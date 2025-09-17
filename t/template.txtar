@@ -1,2 +1,2 @@
-exec testgfn Idiots
+exec gfn Idiots
 stdout 'face'

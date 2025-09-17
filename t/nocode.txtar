@@ -1,2 +1,2 @@
-exec testgfn akx
+exec gfn akx
 stdout 'akx'
