@@ -1,6 +1,6 @@
 module github.com/TLINDEN/gfn
 
-go 1.23
+go 1.23.0
 
 toolchain go1.23.5
 
@@ -9,7 +9,7 @@ require (
 	github.com/knadh/koanf/providers/confmap v0.1.0
 	github.com/knadh/koanf/providers/file v1.1.2
 	github.com/knadh/koanf/providers/posflag v0.1.0
-	github.com/knadh/koanf/v2 v2.1.2
+	github.com/knadh/koanf/v2 v2.3.0
 	github.com/rogpeppe/go-internal v1.13.1
 	github.com/s0rg/fantasyname v1.3.6
 	github.com/spf13/pflag v1.0.6
@@ -19,8 +19,8 @@ require (
 require (
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
-	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
-	github.com/knadh/koanf/maps v0.1.1 // indirect
+	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
+	github.com/knadh/koanf/maps v0.1.2 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
