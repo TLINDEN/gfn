@@ -20,6 +20,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"runtime/debug"
 
@@ -44,7 +45,10 @@ func Main(output io.Writer) int {
 	}
 
 	if conf.Showversion {
-		fmt.Fprintf(output, "This is gfn version %s\n", VERSION)
+		_, err := fmt.Fprintf(output, "This is gfn version %s\n", VERSION)
+		if err != nil {
+			log.Fatalf("failed to print to output: %w", err)
+		}
 
 		return 0
 	}
@@ -80,7 +84,11 @@ func Main(output io.Writer) int {
 
 	// code argument is mandatory
 	if len(conf.Code) == 0 {
-		fmt.Fprintln(output, Usage)
+		_, err := fmt.Fprintln(output, Usage)
+		if err != nil {
+			log.Fatalf("failed to print to output: %w", err)
+		}
+
 		return 1
 	}
 

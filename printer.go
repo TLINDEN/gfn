@@ -20,6 +20,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"log/slog"
 	"sort"
 )
@@ -37,7 +38,10 @@ func ListTemplates(conf *Config, output io.Writer) {
 	sort.Strings(names)
 
 	for _, name := range names {
-		fmt.Fprintln(output, name)
+		_, err := fmt.Fprintln(output, name)
+		if err != nil {
+			log.Fatalf("failed to print to output: %w", err)
+		}
 	}
 }
 
@@ -62,7 +66,10 @@ func PrintColumns(conf *Config, names []string, output io.Writer) error {
 
 	for _, row := range padlist {
 		for _, word := range row {
-			fmt.Fprintf(output, format, word)
+			_, err := fmt.Fprintf(output, format, word)
+			if err != nil {
+				log.Fatalf("failed to print to output: %w", err)
+			}
 		}
 		fmt.Fprintln(output)
 	}

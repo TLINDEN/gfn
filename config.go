@@ -20,6 +20,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -198,7 +199,10 @@ func InitConfig(output io.Writer) (*Config, error) {
 	// setup custom usage
 	flagset := flag.NewFlagSet("config", flag.ContinueOnError)
 	flagset.Usage = func() {
-		fmt.Fprintln(output, Usage)
+		_, err := fmt.Fprintln(output, Usage)
+		if err != nil {
+			log.Fatalf("failed to print to output: %w", err)
+		}
 		os.Exit(0)
 	}
 
