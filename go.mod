@@ -6,7 +6,7 @@ toolchain go1.24.5
 
 require (
 	github.com/knadh/koanf/parsers/toml v0.1.0
-	github.com/knadh/koanf/providers/confmap v0.1.0
+	github.com/knadh/koanf/providers/confmap v1.0.0
 	github.com/knadh/koanf/providers/file v1.2.0
 	github.com/knadh/koanf/providers/posflag v1.0.1
 	github.com/knadh/koanf/v2 v2.3.0
