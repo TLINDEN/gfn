@@ -12,7 +12,7 @@ require (
 	github.com/knadh/koanf/v2 v2.3.0
 	github.com/rogpeppe/go-internal v1.14.1
 	github.com/s0rg/fantasyname v1.3.6
-	github.com/spf13/pflag v1.0.6
+	github.com/spf13/pflag v1.0.10
 	github.com/tlinden/yadu v0.1.3
 )
 
