@@ -1,10 +1,10 @@
 # gfn - generate fantasy names for games and stories on the commandline
 
-![Gfn Logo](https://github.com/TLINDEN/gfn/blob/main/.github/assets/logo.png)
+![Gfn Logo](https://codeberg.org/scip/gfn/raw/branch/.github/assets/logo.png)
 
-[![Actions](https://github.com/tlinden/gfn/actions/workflows/ci.yaml/badge.svg)](https://github.com/tlinden/gfn/actions)
-[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/tlinden/gfn/blob/master/LICENSE)
-[![Go Report Card](https://goreportcard.com/badge/github.com/tlinden/gfn)](https://goreportcard.com/report/github.com/tlinden/gfn) 
+[![status-badge](https://ci.codeberg.org/api/badges/15529/status.svg)](https://ci.codeberg.org/repos/15529)
+[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://codeberg.org/scip/gfn/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/codeberg.org/scip/gfn)](https://goreportcard.com/report/codeberg.org/scip/gfn) 
 
 Generate fantasy names for games and stories. It uses the fine
 [fantasyname module](https://github.com/s0rg/fantasyname) by
@@ -31,7 +31,7 @@ You can use [stew](https://github.com/marwanhawari/stew) to install gfn:
 stew install tlinden/gfn
 ```
 
-Or go to the [latest release page](https://github.com/TLINDEN/gfn/releases/latest)
+Or go to the [latest release page](https://codeberg.org/scip/gfn/releases)
 and look for your OS and platform. There are two options to install the binary:
 
 Directly     download     the     binary    for     your     platform,
@@ -171,7 +171,7 @@ Config files are expected to be in the [TOML format](https://toml.io/en/).
 
 # Report bugs
 
-[Please open an issue](https://github.com/TLINDEN/gfn/issues). Thanks!
+[Please open an issue](https://codeberg.org/scip/gfn/issues). Thanks!
 
 # License
 

@@ -1,4 +1,4 @@
-module github.com/TLINDEN/gfn
+module codeberg.org/scip/gfn
 
 go 1.24.0
 
