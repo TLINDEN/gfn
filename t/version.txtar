@@ -1,2 +1,0 @@
-exec gfn -v
-stdout 'This is gfn version'

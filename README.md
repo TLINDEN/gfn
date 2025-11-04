@@ -6,6 +6,9 @@
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://codeberg.org/scip/gfn/blob/master/LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/codeberg.org/scip/gfn)](https://goreportcard.com/report/codeberg.org/scip/gfn) 
 
+> [!IMPORTANT]
+> This software is now being maintained on [Codeberg](https://codeberg.org/scip/gfn/).
+
 Generate fantasy names for games and stories. It uses the fine
 [fantasyname module](https://github.com/s0rg/fantasyname) by
 [s0rg](https://github.com/s0rg/), which implements the code created by
