@@ -1,6 +1,6 @@
 # gfn - generate fantasy names for games and stories on the commandline
 
-![Gfn Logo](https://codeberg.org/scip/gfn/raw/branch/.github/assets/logo.png)
+![Gfn Logo](https://codeberg.org/scip/gfn/raw/branch/main/.github/assets/logo.png)
 
 [![status-badge](https://ci.codeberg.org/api/badges/15529/status.svg)](https://ci.codeberg.org/repos/15529)
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://codeberg.org/scip/gfn/blob/master/LICENSE)
