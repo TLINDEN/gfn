@@ -3,7 +3,7 @@
 ![Gfn Logo](https://codeberg.org/scip/gfn/raw/branch/main/.github/assets/logo.png)
 
 [![status-badge](https://ci.codeberg.org/api/badges/15529/status.svg)](https://ci.codeberg.org/repos/15529)
-[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://codeberg.org/scip/gfn/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-GPL-blue.svg)](https://codeberg.org/scip/gfn/raw/branch/main/LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/codeberg.org/scip/gfn)](https://goreportcard.com/report/codeberg.org/scip/gfn) 
 
 Generate fantasy names for games and stories. It uses the fine
